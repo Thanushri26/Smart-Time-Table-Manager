@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Class Time Table Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Smart Class Time Table Management System</h1>
+      <p class="subtitle">ML-Powered | Drag & Drop | Attendance | Biometric Auto-Update | Faculty Replacement</p>
+    </header>
+
+    <div class="controls">
+      <select id="classSelect">
+        <option value="CSE-A">CSE - A</option>
+        <option value="CSE-B">CSE - B</option>
+        <option value="ECE-A">ECE - A</option>
+      </select>
+      <button onclick="generateTimetable()">Auto Generate Timetable</button>
+      <button class="secondary" onclick="predictAttendance()">ML Predict Attendance</button>
+      <button onclick="simulateBiometric()">Biometric Scan</button>
+      <button onclick="exportData()">Export JSON</button>
+      <button class="danger" onclick="clearTimetable()">Clear</button>
+    </div>
+
+    <div class="faculty-pool">
+      <h3>Available Faculty - Drag to Replace</h3>
+      <div class="faculty-list" id="facultyPool"></div>
+      <p style="font-size:12px;color:#666;margin-top:8px">Drag any faculty card onto a timetable slot to replace faculty.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>
+      </thead>
+      <tbody id="timetableBody"></tbody>
+    </table>
+
+    <div class="ml-panel">
+      <h3>🤖 ML Insights</h3>
+      <p id="mlOutput">Click "ML Predict Attendance" to run ML model.</p>
+      <div id="mlDetails"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card"><div class="stat-value" id="totalClasses">0</div><div>Total Classes</div></div>
+      <div class="stat-card"><div class="stat-value" id="avgAttendance">0%</div><div>Avg Attendance</div></div>
+      <div class="stat-card"><div class="stat-value" id="conflicts">0</div><div>Faculty Conflicts</div></div>
+      <div class="stat-card"><div class="stat-value" id="highRisk">0</div><div>High Risk Slots</div></div>
+    </div>
+
+    <div class="attendance-section">
+      <h3>Student Attendance - Editable</h3>
+      <p style="font-size:13px;color:#666">Click on Present/Absent to edit. Biometric will auto-update.</p>
+      <div id="studentList"></div>
+    </div>
+  </div>
+
+  <!-- Replace Modal -->
+  <div class="modal" id="replaceModal">
+    <div class="modal-content">
+      <h3>Replace Faculty & Subject</h3>
+      <label>New Faculty</label>
+      <select id="newFaculty"></select>
+      <label>New Subject</label>
+      <select id="newSubject"></select>
+      <label>Reason</label>
+      <input type="text" id="replaceReason" placeholder="e.g. Faculty on leave">
+      <div class="controls">
+        <button onclick="confirmReplace()">Replace</button>
+        <button class="danger" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3>Edit Slot</h3>
+      <label>Subject</label>
+      <select id="editSubject"></select>
+      <label>Room No</label>
+      <input type="text" id="editRoom" placeholder="e.g. Room 301">
+      <div class="controls">
+        <button onclick="confirmEdit()">Save</button>
+        <button class="danger" onclick="closeEditModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
